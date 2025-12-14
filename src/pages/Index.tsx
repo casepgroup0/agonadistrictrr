@@ -1,13 +1,27 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Layout } from "@/components/layout/Layout";
+import { HeroSection } from "@/components/home/HeroSection";
+import { MissionSection } from "@/components/home/MissionSection";
+import { AgeGroupsSection } from "@/components/home/AgeGroupsSection";
+import { CTASection } from "@/components/home/CTASection";
+import { Helmet } from "react-helmet-async";
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <>
+      <Helmet>
+        <title>Royal Rangers Agona District | Building Champions for Life</title>
+        <meta
+          name="description"
+          content="Royal Rangers Agona District empowers young men and boys to become Christlike servant leaders through adventure, mentoring, and spiritual growth in Ghana's Central Region."
+        />
+      </Helmet>
+      <Layout>
+        <HeroSection />
+        <MissionSection />
+        <AgeGroupsSection />
+        <CTASection />
+      </Layout>
+    </>
   );
 };
 
