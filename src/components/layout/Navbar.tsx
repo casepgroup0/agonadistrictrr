@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
+import { UserMenu } from "@/components/auth/UserMenu";
 
 const navLinks = [
   { name: "Home", path: "/" },
@@ -53,11 +54,12 @@ export function Navbar() {
             ))}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden lg:block">
+          {/* CTA & User Menu */}
+          <div className="hidden lg:flex items-center gap-3">
             <Button variant="gold" size="sm" asChild>
               <Link to="/register">Join Us</Link>
             </Button>
+            <UserMenu />
           </div>
 
           {/* Mobile Menu Button */}
@@ -99,12 +101,15 @@ export function Navbar() {
                   {link.name}
                 </Link>
               ))}
-              <div className="pt-2">
+              <div className="pt-2 space-y-2">
                 <Button variant="gold" className="w-full" asChild>
                   <Link to="/register" onClick={() => setIsOpen(false)}>
                     Join Royal Rangers
                   </Link>
                 </Button>
+                <div className="flex justify-center">
+                  <UserMenu />
+                </div>
               </div>
             </div>
           </motion.div>
