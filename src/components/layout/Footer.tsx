@@ -107,6 +107,9 @@ export function Footer() {
               </Link>
             </div>
           </div>
+          <p className="text-center text-sm text-primary-foreground/50 mt-4">
+            Made by CASEP Group 2025
+          </p>
         </div>
       </div>
     </footer>
