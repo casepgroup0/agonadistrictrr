@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { Shield, MapPin, Phone, Mail, Facebook, Instagram, Youtube } from "lucide-react";
+import { MapPin, Phone, Mail, Facebook, Instagram, Youtube } from "lucide-react";
+import logo from "@/assets/logo.png";
 
 export function Footer() {
   return (
@@ -9,12 +10,14 @@ export function Footer() {
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-gradient-gold flex items-center justify-center">
-                <Shield className="w-6 h-6 text-secondary-foreground" />
-              </div>
+              <img 
+                src={logo} 
+                alt="Royal Rangers Logo" 
+                className="w-12 h-12 object-contain"
+              />
               <div>
-                <p className="font-display font-bold text-lg">Royal Rangers</p>
-                <p className="text-sm text-primary-foreground/70">Agona District</p>
+                <p className="font-display font-bold text-lg">Agona District</p>
+                <p className="text-sm text-primary-foreground/70">Royal Rangers</p>
               </div>
             </div>
             <p className="text-sm text-primary-foreground/80 leading-relaxed">
