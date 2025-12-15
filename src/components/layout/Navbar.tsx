@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Shield } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { UserMenu } from "@/components/auth/UserMenu";
+import logo from "@/assets/logo.png";
 
 const navLinks = [
   { name: "Home", path: "/" },
@@ -25,15 +26,17 @@ export function Navbar() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-hero flex items-center justify-center shadow-glow-red">
-              <Shield className="w-5 h-5 md:w-6 md:h-6 text-primary-foreground" />
-            </div>
-            <div className="hidden sm:block">
-              <p className="font-display font-bold text-foreground text-sm md:text-base leading-tight">
-                Royal Rangers
+          <Link to="/" className="flex items-center gap-2 md:gap-3 group">
+            <img 
+              src={logo} 
+              alt="Royal Rangers Logo" 
+              className="w-10 h-10 md:w-12 md:h-12 object-contain"
+            />
+            <div>
+              <p className="font-display font-bold text-foreground text-xs sm:text-sm md:text-base leading-tight">
+                Agona District
               </p>
-              <p className="text-xs text-muted-foreground">Agona District</p>
+              <p className="text-[10px] sm:text-xs text-muted-foreground">Royal Rangers</p>
             </div>
           </Link>
 
