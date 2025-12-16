@@ -14,6 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
+      events: {
+        Row: {
+          attendees: number | null
+          created_at: string
+          date: string
+          description: string | null
+          highlight: string | null
+          id: string
+          is_past: boolean | null
+          location: string
+          time: string | null
+          title: string
+          type: string | null
+          updated_at: string
+        }
+        Insert: {
+          attendees?: number | null
+          created_at?: string
+          date: string
+          description?: string | null
+          highlight?: string | null
+          id?: string
+          is_past?: boolean | null
+          location: string
+          time?: string | null
+          title: string
+          type?: string | null
+          updated_at?: string
+        }
+        Update: {
+          attendees?: number | null
+          created_at?: string
+          date?: string
+          description?: string | null
+          highlight?: string | null
+          id?: string
+          is_past?: boolean | null
+          location?: string
+          time?: string | null
+          title?: string
+          type?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
