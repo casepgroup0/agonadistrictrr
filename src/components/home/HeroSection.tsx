@@ -1,21 +1,59 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Users, Award, Calendar } from "lucide-react";
-import heroImage from "@/assets/hero-image.jpg";
+import { useState, useEffect } from "react";
+
+import heroSlide1 from "@/assets/hero-slide-1.jpeg";
+import heroSlide2 from "@/assets/hero-slide-2.jpg";
+import heroSlide3 from "@/assets/hero-slide-3.jpeg";
+import heroSlide4 from "@/assets/hero-slide-4.jpeg";
+import heroSlide5 from "@/assets/hero-slide-5.jpeg";
+import heroSlide6 from "@/assets/hero-slide-6.jpg";
+
+const heroImages = [heroSlide1, heroSlide2, heroSlide3, heroSlide4, heroSlide5, heroSlide6];
 
 export function HeroSection() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroImages.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="relative min-h-[90vh] flex items-center overflow-hidden">
-      {/* Background Image */}
+      {/* Background Slideshow */}
       <div className="absolute inset-0">
-        <img 
-          src={heroImage} 
-          alt="Royal Rangers Agona District" 
-          className="w-full h-full object-cover"
-        />
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={currentSlide}
+            src={heroImages[currentSlide]}
+            alt={`Royal Rangers Agona District - Slide ${currentSlide + 1}`}
+            className="w-full h-full object-cover"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+          />
+        </AnimatePresence>
         <div className="absolute inset-0 bg-gradient-to-r from-foreground/90 via-foreground/70 to-foreground/40" />
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
+      </div>
+
+      {/* Slide Indicators */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+        {heroImages.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentSlide(index)}
+            className={`w-2 h-2 rounded-full transition-all ${
+              index === currentSlide ? "bg-secondary w-6" : "bg-primary-foreground/50"
+            }`}
+          />
+        ))}
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
