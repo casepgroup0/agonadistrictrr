@@ -11,6 +11,20 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Helmet } from "react-helmet-async";
 import { Plus, Pencil, Trash2, LogOut } from "lucide-react";
+import { z } from "zod";
+
+// Input validation schema for events
+const eventSchema = z.object({
+  title: z.string().min(1, "Title is required").max(200, "Title must be less than 200 characters"),
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format"),
+  time: z.string().max(50, "Time must be less than 50 characters").optional().nullable(),
+  location: z.string().min(1, "Location is required").max(500, "Location must be less than 500 characters"),
+  description: z.string().max(5000, "Description must be less than 5000 characters").optional().nullable(),
+  type: z.string().max(100, "Type must be less than 100 characters").optional().nullable(),
+  attendees: z.number().min(0, "Attendees cannot be negative").max(100000, "Attendees value too large").optional().nullable(),
+  is_past: z.boolean().optional().nullable(),
+  highlight: z.string().max(200, "Highlight must be less than 200 characters").optional().nullable(),
+});
 import {
   Dialog,
   DialogContent,
@@ -96,22 +110,28 @@ export default function AdminEvents() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (role !== "admin") {
-      toast.error("Only admins can manage events");
+    // Validate form data with zod schema
+    const rawEventData = {
+      title: formData.title.trim(),
+      date: formData.date,
+      time: formData.time?.trim() || null,
+      location: formData.location.trim(),
+      description: formData.description?.trim() || null,
+      type: formData.type?.trim() || "general",
+      attendees: formData.attendees || 0,
+      is_past: formData.is_past,
+      highlight: formData.highlight?.trim() || null,
+    };
+
+    const validationResult = eventSchema.safeParse(rawEventData);
+    if (!validationResult.success) {
+      const firstError = validationResult.error.errors[0];
+      toast.error(firstError.message);
       return;
     }
 
-    const eventData = {
-      title: formData.title,
-      date: formData.date,
-      time: formData.time || null,
-      location: formData.location,
-      description: formData.description || null,
-      type: formData.type || "general",
-      attendees: formData.attendees || 0,
-      is_past: formData.is_past,
-      highlight: formData.highlight || null,
-    };
+    // Use validated raw data (preserves required field types)
+    const eventData = rawEventData;
 
     if (editingEvent) {
       const { error } = await supabase
@@ -120,7 +140,12 @@ export default function AdminEvents() {
         .eq("id", editingEvent.id);
 
       if (error) {
-        toast.error("Failed to update event");
+        // Handle authorization errors gracefully
+        if (error.code === "42501" || error.message?.includes("policy")) {
+          toast.error("You don't have permission to update events");
+        } else {
+          toast.error("Failed to update event");
+        }
       } else {
         toast.success("Event updated!");
         fetchEvents();
@@ -128,10 +153,15 @@ export default function AdminEvents() {
         resetForm();
       }
     } else {
-      const { error } = await supabase.from("events").insert(eventData);
+      const { error } = await supabase.from("events").insert([eventData]);
 
       if (error) {
-        toast.error("Failed to create event");
+        // Handle authorization errors gracefully
+        if (error.code === "42501" || error.message?.includes("policy")) {
+          toast.error("You don't have permission to create events");
+        } else {
+          toast.error("Failed to create event");
+        }
       } else {
         toast.success("Event created!");
         fetchEvents();
@@ -163,7 +193,12 @@ export default function AdminEvents() {
     const { error } = await supabase.from("events").delete().eq("id", id);
 
     if (error) {
-      toast.error("Failed to delete event");
+      // Handle authorization errors gracefully
+      if (error.code === "42501" || error.message?.includes("policy")) {
+        toast.error("You don't have permission to delete events");
+      } else {
+        toast.error("Failed to delete event");
+      }
     } else {
       toast.success("Event deleted!");
       fetchEvents();
