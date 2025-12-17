@@ -117,7 +117,7 @@ export default function Events() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
-                    className="bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-lg transition-all group"
+                    className="bg-card/50 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all group"
                   >
                     <div className="h-2 bg-gradient-gold" />
                     <div className="p-6">
@@ -198,7 +198,7 @@ export default function Events() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
-                    className="bg-card rounded-xl p-6 border border-border"
+                    className="bg-card/50 rounded-xl p-6"
                   >
                     <h3 className="text-lg font-display font-bold text-foreground mb-2">
                       {event.title}
