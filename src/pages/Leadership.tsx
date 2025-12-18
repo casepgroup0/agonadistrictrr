@@ -5,42 +5,42 @@ import { Helmet } from "react-helmet-async";
 
 const currentExecutives = [
   {
-    name: "Rev. Kwame Asante",
+    name: "Ps. Isaac Bamfo",
     role: "District Commander",
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400",
     bio: "Leading the district since 2020 with a passion for youth development and spiritual growth.",
     email: "commander@royalrangers-agona.org",
   },
   {
-    name: "Bro. Emmanuel Mensah",
+    name: "Comm. Frederick Turkson",
     role: "Deputy District Commander",
     image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400",
     bio: "Overseeing training programs and outpost development across the district.",
     email: "deputy@royalrangers-agona.org",
   },
   {
-    name: "Sis. Grace Osei",
+    name: "Comm. Gloria Ayanful",
     role: "District Secretary",
     image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400",
     bio: "Managing communications and administrative operations for the district.",
     email: "secretary@royalrangers-agona.org",
   },
   {
-    name: "Bro. Daniel Appiah",
+    name: "Comm. Cosmos Agyei",
     role: "District Treasurer",
     image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400",
     bio: "Ensuring financial integrity and resource management for all district activities.",
     email: "treasurer@royalrangers-agona.org",
   },
   {
-    name: "Bro. Samuel Nkrumah",
+    name: "Comm. Stephen Arkoh",
     role: "Training Coordinator",
     image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400",
     bio: "Developing and implementing leadership training programs for commanders.",
     email: "training@royalrangers-agona.org",
   },
   {
-    name: "Sis. Abena Forson",
+    name: "Comm. Pamela Takyi-Armah",
     role: "Events Coordinator",
     image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400",
     bio: "Planning and executing district camps, rallies, and special events.",
@@ -49,10 +49,10 @@ const currentExecutives = [
 ];
 
 const pastCommanders = [
-  { name: "Rev. Joseph Agyeman", years: "2015-2020" },
-  { name: "Rev. Peter Ansah", years: "2010-2015" },
-  { name: "Rev. Isaac Boateng", years: "2005-2010" },
-  { name: "Rev. James Owusu", years: "1998-2005" },
+  { name: "Comm. Jeremiah Apowre", years: "2015-2020" },
+  { name: "Ps. Titus Paintsil", years: "2010-2015" },
+  { name: "Comm. Francis Yawson", years: "2005-2010" },
+  { name: "Comm. Priscilla Arkoh", years: "1998-2005" },
 ];
 
 export default function Leadership() {
