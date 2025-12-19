@@ -2,6 +2,10 @@ import { Layout } from "@/components/layout/Layout";
 import { motion } from "framer-motion";
 import { Mail, Phone } from "lucide-react";
 import { Helmet } from "react-helmet-async";
+import frederickTurkson from "@/assets/frederick-turkson.jpeg";
+import pamelaTakyiArmah from "@/assets/pamela-takyi-armah.jpeg";
+import gloriaAyanful from "@/assets/gloria-ayanful.jpeg";
+import cosmosAgyei from "@/assets/cosmos-agyei.jpeg";
 
 const currentExecutives = [
   {
@@ -14,21 +18,21 @@ const currentExecutives = [
   {
     name: "Comm. Frederick Turkson",
     role: "Deputy District Commander",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400",
+    image: frederickTurkson,
     bio: "Overseeing training programs and outpost development across the district.",
     email: "deputy@royalrangers-agona.org",
   },
   {
     name: "Comm. Gloria Ayanful",
     role: "District Secretary",
-    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400",
+    image: gloriaAyanful,
     bio: "Managing communications and administrative operations for the district.",
     email: "secretary@royalrangers-agona.org",
   },
   {
     name: "Comm. Cosmos Agyei",
     role: "District Treasurer",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400",
+    image: cosmosAgyei,
     bio: "Ensuring financial integrity and resource management for all district activities.",
     email: "treasurer@royalrangers-agona.org",
   },
@@ -42,7 +46,7 @@ const currentExecutives = [
   {
     name: "Comm. Pamela Takyi-Armah",
     role: "Events Coordinator",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400",
+    image: pamelaTakyiArmah,
     bio: "Planning and executing district camps, rallies, and special events.",
     email: "events@royalrangers-agona.org",
   },
