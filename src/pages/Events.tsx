@@ -21,6 +21,121 @@ interface Event {
   highlight: string | null;
 }
 
+// Sample events for 2026
+const sampleUpcomingEvents: Event[] = [
+  {
+    id: "1",
+    title: "District Ranger Camp 2026",
+    date: "2026-04-10",
+    time: "8:00 AM - 5:00 PM",
+    location: "Swedru Campsite, Agona District",
+    description: "Annual district camping experience with outdoor activities, survival skills, and spiritual development for all ranger groups.",
+    type: "Camp",
+    attendees: 150,
+    is_past: false,
+    highlight: null,
+  },
+  {
+    id: "2",
+    title: "Easter Rally 2026",
+    date: "2026-04-05",
+    time: "9:00 AM - 2:00 PM",
+    location: "Agona Swedru Central Park",
+    description: "District-wide Easter celebration with games, worship, and fellowship for all Royal Rangers and families.",
+    type: "Rally",
+    attendees: 200,
+    is_past: false,
+    highlight: null,
+  },
+  {
+    id: "3",
+    title: "Commander Training Seminar",
+    date: "2026-02-15",
+    time: "9:00 AM - 4:00 PM",
+    location: "District Headquarters, Agona Swedru",
+    description: "Leadership training for outpost commanders and senior guides on effective ranger ministry.",
+    type: "Training",
+    attendees: 40,
+    is_past: false,
+    highlight: null,
+  },
+  {
+    id: "4",
+    title: "Outpost Visitation - Nyakrom",
+    date: "2026-03-08",
+    time: "10:00 AM - 1:00 PM",
+    location: "Nyakrom Assembly of God Church",
+    description: "District leadership visit to Nyakrom outpost for inspection, encouragement, and support.",
+    type: "Visitation",
+    attendees: 25,
+    is_past: false,
+    highlight: null,
+  },
+  {
+    id: "5",
+    title: "Junior Training Camp",
+    date: "2026-06-20",
+    time: "8:00 AM - 5:00 PM",
+    location: "Agona Nsaba Camp Grounds",
+    description: "Specialized training camp for Ranger Kids and Discovery Rangers with age-appropriate activities.",
+    type: "Camp",
+    attendees: 80,
+    is_past: false,
+    highlight: null,
+  },
+];
+
+const samplePastEvents: Event[] = [
+  {
+    id: "6",
+    title: "Christmas Outreach 2025",
+    date: "2025-12-20",
+    time: null,
+    location: "Various Communities, Agona District",
+    description: "Rangers spread Christmas joy through community service and gift distribution.",
+    type: "Outreach",
+    attendees: 120,
+    is_past: true,
+    highlight: "120 families reached",
+  },
+  {
+    id: "7",
+    title: "District Awards Night 2025",
+    date: "2025-11-15",
+    time: null,
+    location: "Agona Swedru Community Center",
+    description: "Annual ceremony celebrating ranger achievements and advancement.",
+    type: "Ceremony",
+    attendees: 180,
+    is_past: true,
+    highlight: "45 rangers advanced",
+  },
+  {
+    id: "8",
+    title: "Leadership Summit 2025",
+    date: "2025-10-05",
+    time: null,
+    location: "District Headquarters",
+    description: "Strategic planning and leadership development for district commanders.",
+    type: "Summit",
+    attendees: 35,
+    is_past: true,
+    highlight: "New vision launched",
+  },
+  {
+    id: "9",
+    title: "National Camporee 2025",
+    date: "2025-08-10",
+    time: null,
+    location: "Kumasi, Ashanti Region",
+    description: "National gathering of Royal Rangers from across Ghana.",
+    type: "Camporee",
+    attendees: 60,
+    is_past: true,
+    highlight: "3 Gold Medals won",
+  },
+];
+
 export default function Events() {
   const [upcomingEvents, setUpcomingEvents] = useState<Event[]>([]);
   const [pastEvents, setPastEvents] = useState<Event[]>([]);
@@ -33,9 +148,13 @@ export default function Events() {
         .select("*")
         .order("date", { ascending: true });
 
-      if (!error && data) {
+      if (!error && data && data.length > 0) {
         setUpcomingEvents(data.filter((e) => !e.is_past));
         setPastEvents(data.filter((e) => e.is_past));
+      } else {
+        // Use sample events if no database events found
+        setUpcomingEvents(sampleUpcomingEvents);
+        setPastEvents(samplePastEvents);
       }
       setIsLoading(false);
     };
