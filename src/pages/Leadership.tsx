@@ -2,16 +2,17 @@ import { Layout } from "@/components/layout/Layout";
 import { motion } from "framer-motion";
 import { Mail, Phone } from "lucide-react";
 import { Helmet } from "react-helmet-async";
-import frederickTurkson from "@/assets/frederick-turkson.jpeg";
-import pamelaTakyiArmah from "@/assets/pamela-takyi-armah.jpeg";
+import isaacBamfo from "@/assets/isaac-bamfo.jpg";
+import frederickTurkson from "@/assets/frederick-turkson.jpg";
 import gloriaAyanful from "@/assets/gloria-ayanful.jpeg";
-import cosmosAgyei from "@/assets/cosmos-agyei.jpeg";
+import cosmosAgyei from "@/assets/cosmos-agyei.jpg";
+import pamelaTakyiArmah from "@/assets/pamela-takyi-armah.jpg";
 
 const currentExecutives = [
   {
     name: "Ps. Isaac Bamfo",
     role: "District Commander",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400",
+    image: isaacBamfo,
     bio: "Leading the district since 2020 with a passion for youth development and spiritual growth.",
     email: "commander@royalrangers-agona.org",
   },
@@ -119,11 +120,11 @@ export default function Leadership() {
                   transition={{ delay: index * 0.1 }}
                   className="bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-lg transition-all group"
                 >
-                  <div className="aspect-[4/3] overflow-hidden">
+                  <div className="aspect-[4/3] overflow-hidden bg-muted">
                     <img
                       src={executive.image}
                       alt={executive.name}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
                   <div className="p-6">
