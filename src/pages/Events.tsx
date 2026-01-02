@@ -1,11 +1,9 @@
-import { useState, useEffect } from "react";
 import { Layout } from "@/components/layout/Layout";
 import { motion } from "framer-motion";
 import { Calendar, MapPin, Clock, Users, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { supabase } from "@/integrations/supabase/client";
 import { format } from "date-fns";
 
 interface Event {
@@ -22,7 +20,7 @@ interface Event {
 }
 
 // Sample events for 2026
-const sampleUpcomingEvents: Event[] = [
+const upcomingEvents: Event[] = [
   {
     id: "1",
     title: "District Ranger Camp 2026",
@@ -85,7 +83,7 @@ const sampleUpcomingEvents: Event[] = [
   },
 ];
 
-const samplePastEvents: Event[] = [
+const pastEvents: Event[] = [
   {
     id: "6",
     title: "Christmas Outreach 2025",
@@ -136,40 +134,15 @@ const samplePastEvents: Event[] = [
   },
 ];
 
+const formatEventDate = (dateStr: string) => {
+  try {
+    return format(new Date(dateStr), "MMMM d, yyyy");
+  } catch {
+    return dateStr;
+  }
+};
+
 export default function Events() {
-  const [upcomingEvents, setUpcomingEvents] = useState<Event[]>([]);
-  const [pastEvents, setPastEvents] = useState<Event[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchEvents = async () => {
-      const { data, error } = await supabase
-        .from("events")
-        .select("*")
-        .order("date", { ascending: true });
-
-      if (!error && data && data.length > 0) {
-        setUpcomingEvents(data.filter((e) => !e.is_past));
-        setPastEvents(data.filter((e) => e.is_past));
-      } else {
-        // Use sample events if no database events found
-        setUpcomingEvents(sampleUpcomingEvents);
-        setPastEvents(samplePastEvents);
-      }
-      setIsLoading(false);
-    };
-
-    fetchEvents();
-  }, []);
-
-  const formatEventDate = (dateStr: string) => {
-    try {
-      return format(new Date(dateStr), "MMMM d, yyyy");
-    } catch {
-      return dateStr;
-    }
-  };
-
   return (
     <>
       <Helmet>
@@ -219,71 +192,61 @@ export default function Events() {
               </h2>
             </motion.div>
 
-            {isLoading ? (
-              <div className="text-center py-12">
-                <p className="text-muted-foreground">Loading events...</p>
-              </div>
-            ) : upcomingEvents.length === 0 ? (
-              <div className="text-center py-12 bg-muted/50 rounded-xl">
-                <p className="text-muted-foreground">No upcoming events at the moment. Check back soon!</p>
-              </div>
-            ) : (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {upcomingEvents.map((event, index) => (
-                  <motion.div
-                    key={event.id}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    className="bg-card/50 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all group"
-                  >
-                    <div className="h-2 bg-gradient-gold" />
-                    <div className="p-6">
-                      <span className="inline-block px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-semibold mb-4">
-                        {event.type || "Event"}
-                      </span>
-                      <h3 className="text-xl font-display font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
-                        {event.title}
-                      </h3>
-                      <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
-                        {event.description || "Join us for this exciting event!"}
-                      </p>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {upcomingEvents.map((event, index) => (
+                <motion.div
+                  key={event.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="bg-card/50 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all group"
+                >
+                  <div className="h-2 bg-gradient-gold" />
+                  <div className="p-6">
+                    <span className="inline-block px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-semibold mb-4">
+                      {event.type || "Event"}
+                    </span>
+                    <h3 className="text-xl font-display font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
+                      {event.title}
+                    </h3>
+                    <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
+                      {event.description || "Join us for this exciting event!"}
+                    </p>
 
-                      <div className="space-y-2 mb-6">
-                        <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                          <Calendar className="w-4 h-4 text-primary" />
-                          <span>{formatEventDate(event.date)}</span>
-                        </div>
-                        {event.time && (
-                          <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                            <Clock className="w-4 h-4 text-primary" />
-                            <span>{event.time}</span>
-                          </div>
-                        )}
-                        <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                          <MapPin className="w-4 h-4 text-primary" />
-                          <span>{event.location}</span>
-                        </div>
-                        {event.attendees && event.attendees > 0 && (
-                          <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                            <Users className="w-4 h-4 text-primary" />
-                            <span>{event.attendees} Expected</span>
-                          </div>
-                        )}
+                    <div className="space-y-2 mb-6">
+                      <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                        <Calendar className="w-4 h-4 text-primary" />
+                        <span>{formatEventDate(event.date)}</span>
                       </div>
-
-                      <Button variant="outline" className="w-full" asChild>
-                        <Link to="/register">
-                          Register Now
-                          <ArrowRight className="w-4 h-4" />
-                        </Link>
-                      </Button>
+                      {event.time && (
+                        <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                          <Clock className="w-4 h-4 text-primary" />
+                          <span>{event.time}</span>
+                        </div>
+                      )}
+                      <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                        <MapPin className="w-4 h-4 text-primary" />
+                        <span>{event.location}</span>
+                      </div>
+                      {event.attendees && event.attendees > 0 && (
+                        <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                          <Users className="w-4 h-4 text-primary" />
+                          <span>{event.attendees} Expected</span>
+                        </div>
+                      )}
                     </div>
-                  </motion.div>
-                ))}
-              </div>
-            )}
+
+                    <Button variant="outline" className="w-full" asChild>
+                      <Link to="/register">
+                        Register Now
+                        <ArrowRight className="w-4 h-4" />
+                      </Link>
+                    </Button>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -304,35 +267,29 @@ export default function Events() {
               </h2>
             </motion.div>
 
-            {pastEvents.length === 0 ? (
-              <div className="text-center py-12">
-                <p className="text-muted-foreground">No past events to display yet.</p>
-              </div>
-            ) : (
-              <div className="grid md:grid-cols-3 gap-6">
-                {pastEvents.map((event, index) => (
-                  <motion.div
-                    key={event.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    className="bg-card/50 rounded-xl p-6"
-                  >
-                    <h3 className="text-lg font-display font-bold text-foreground mb-2">
-                      {event.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground mb-1">{formatEventDate(event.date)}</p>
-                    <p className="text-sm text-muted-foreground mb-3">{event.location}</p>
-                    {event.highlight && (
-                      <span className="inline-block px-3 py-1 rounded-full bg-secondary/30 text-secondary-foreground text-xs font-semibold">
-                        {event.highlight}
-                      </span>
-                    )}
-                  </motion.div>
-                ))}
-              </div>
-            )}
+            <div className="grid md:grid-cols-3 gap-6">
+              {pastEvents.map((event, index) => (
+                <motion.div
+                  key={event.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="bg-card/50 rounded-xl p-6"
+                >
+                  <h3 className="text-lg font-display font-bold text-foreground mb-2">
+                    {event.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground mb-1">{formatEventDate(event.date)}</p>
+                  <p className="text-sm text-muted-foreground mb-3">{event.location}</p>
+                  {event.highlight && (
+                    <span className="inline-block px-3 py-1 rounded-full bg-secondary/30 text-secondary-foreground text-xs font-semibold">
+                      {event.highlight}
+                    </span>
+                  )}
+                </motion.div>
+              ))}
+            </div>
 
             <div className="mt-12 text-center">
               <Button variant="default" asChild>
