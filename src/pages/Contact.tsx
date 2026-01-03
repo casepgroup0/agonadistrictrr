@@ -160,7 +160,7 @@ export default function Contact() {
                     </div>
                     <div>
                       <h4 className="font-display font-bold text-foreground mb-1">Phone</h4>
-                      <p className="text-muted-foreground">+233 24 572 0660 / +233 53 355 9232</p>
+                      <p className="text-muted-foreground">+233 54 278 1491 / +233 54 775 3708</p>
                     </div>
                   </div>
 
