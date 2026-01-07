@@ -7,6 +7,7 @@ import frederickTurkson from "@/assets/frederick-turkson.jpg";
 import gloriaAyanful from "@/assets/gloria-ayanful.jpeg";
 import cosmosAgyei from "@/assets/cosmos-agyei.jpg";
 import pamelaTakyiArmah from "@/assets/pamela-takyi-armah.jpg";
+import stephenArkoh from "@/assets/stephen-arkoh.jpg";
 
 const currentExecutives = [
   {
@@ -40,7 +41,7 @@ const currentExecutives = [
   {
     name: "Comm. Stephen Arkoh",
     role: "Training Coordinator",
-    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400",
+    image: stephenArkoh,
     bio: "Developing and implementing leadership training programs for commanders.",
     email: "training@royalrangers-agona.org",
   },
